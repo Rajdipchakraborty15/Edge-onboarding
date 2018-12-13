@@ -1,0 +1,277 @@
+<html>
+<head>
+    <title>MachineSense</title>
+	       
+     <link rel="stylesheet" type="text/css" href="public/style.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	
+     <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico" />                   
+
+</head>
+
+<body>
+    <div class="header_logo">
+                        
+                          
+                        
+                        
+		<a href="/" >
+			<img src="public/logo.png" alt="MachineSense" itemprop="logo" style ="height: 40px">
+		</a>
+	
+                        
+                            
+                        
+    </div>
+
+<div class="aaa"> 
+
+   <fieldset>
+   <legend>Onboarding Details</legend>
+<form action ="/onBoard" name ="form2" id='pt' method="post">
+
+
+<table >
+<tr> <td><label <b> MachineName </b></label></td>
+     <td><input type="text"  placeholder="enter machine name"   name ="machine" size=20 required  ></td>
+     <td><input type="button" value="onboard" id = "onBoardSub"></td>
+</tr>
+
+<tr>
+     <td> <label <b> Zone</b></label></td>
+     <td><input type="text"  placeholder="enter zone"   name ="zone" size=20 required  ></td>
+</tr>	 
+<tr>
+     <td><label <b> Location </b></label></td>
+     <td><input type="text"  placeholder="enter location"   name ="loc" size=20 required  ></td>
+</tr>
+<tr>
+     <td><label <b>Datahub MAC </b></label></td>
+     <td><input type="text"  placeholder="enter datahub mac"   name ="loc" size=20 required  ></td>
+</tr>
+
+
+
+<tr> <td><label <b> MAC: </b></label></td>
+     <td><input type="text"  placeholder="12 digits for mac" maxlength="17"  name ="mac1" size=20 required  ></td>
+
+
+     <td><label>Type:</label></td>
+
+<td><select id="list" name="opt1" >
+      <option>st1</option>
+      <option>vac1</option>
+      <option>ps1</option>
+      <option>pf1</option>
+</select></td>
+<td><input type="hidden" name="count" id="count1"/></td>
+<td><input type="button" id="btAdd" value="Add More" class="bt" /></td>
+<td><input type="button" id="btDone" value="Done" class="bt" /></td></tr>
+
+</table>
+</form>
+</fieldset><br><br>
+
+
+
+
+<form action ="/replace" name="form3" method ="post" id="pt1">
+<fieldset>
+<legend>Replace Sensor Id</legend>
+<table>
+<tr>
+    <td><label for =""<b>OLD MAC </b></label></td>
+    <td><input type="text"   placeholder="12 digits for old mac" maxlength="17" name="offmac" size=20  required  ></td>
+    <td><label for =""<b>NEW MAC </b></label></td>
+    <td><input type="text"   placeholder="12 digits for new mac" maxlength="17" name="newmac" size=20  required  ></td>
+</tr>
+<tr>
+    <td><input type= "button" id="btreplace" value="Replace" class="bt"/> </td>
+</tr>
+</table>
+</fieldset>
+</form>
+
+
+ <form action ="/offboard" name ="" method="post">
+ <fieldset>
+ <legend>OffBoarding</legend>
+ <table>
+ <tr>
+     
+     <td><input type="submit" value="offboard"/></td>
+</tr>	 
+</table>
+</fieldset>
+</form><!-- close form -->
+</div><!-- close aa -->
+
+
+<script language ="javascript">
+
+$(document).ready(function() {
+		$('#onBoardSub').attr('disabled', 'disabled');
+        var iCnt = 2;
+        // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
+
+$('#btAdd').click(function() {
+		
+        if (iCnt <= 4) {
+
+
+                // ADD TEXTBOX.
+                $('#pt').append('&nbsp<label>MAC: </label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type=text class="input" placeholder="12 digits for mac" maxlength="17" size=20 required name="mac' + iCnt + '"/>');
+			    $('#pt').append('<label> Type: </label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<select name="opt'+ iCnt + '"><option>st1</option><option>vac1</option><option>ps1</option><option>pf1</option></select><br>');
+				iCnt = iCnt + 1;
+                
+            }
+            // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON.
+            // (4 IS THE LIMIT WE HAVE SET)
+        else {      
+                $('#pt').append('<label>Reached the limit</label>'); 
+                $('#btAdd').attr('class', 'bt-disable'); 
+                $('#btAdd').attr('disabled', 'disabled');
+            }
+        });
+
+		 // Create function to check if an element is in a specified set.
+		function isIn(s)          { return elt => s.has(elt); }
+
+		// Check if one set contains another (all members of s2 are in s1).
+		function contains(s1, s2) { return [...s2] . every(isIn(s1)); }
+
+		// Set equality: a contains b, and b contains a
+		function eqSet(a, b)      { return contains(a, b) && contains(b, a); }
+		
+		
+		
+		
+		$('#btDone').click(function() {
+            
+			
+          
+		    if(iCnt==2 )
+			{
+				if(document.getElementsByName("opt1")[0].value=="st1")
+				{
+					$('#pt').append('<label> Sub Assembly: </label><select name ="san"><option>Component analyzer-</option></select>');
+			        $('#btAdd').attr('disabled', 'disabled');
+					$('#btDone').attr('disabled', 'disabled');
+					$('#onBoardSub').removeAttr('disabled');
+			     }
+			
+			}
+			
+			else if(iCnt==3)
+			{
+				var set1 = new Set([document.getElementsByName("opt1")[0].value, document.getElementsByName("opt2")[0].value]);
+			
+			
+				if( eqSet(set1, new Set(["st1","vac1"])))
+				{
+					$('#pt').append('<label> Sub Assembly: </label><select name ="san"><option>Vacuum Sense</option></select>');
+			        $('#btAdd').attr('disabled', 'disabled');
+					$('#btDone').attr('disabled', 'disabled');
+					$('#onBoardSub').removeAttr('disabled');
+				}	
+			
+			    else if(eqSet(set1, new Set(["pf1","pf1"])))
+			
+			    {
+			       	$('#pt').append('<label> Sub Assembly: </label><select name ="san"><option>VFD</option></select>');
+			        $('#btAdd').attr('disabled', 'disabled');
+					$('#btDone').attr('disabled', 'disabled');
+					$('#onBoardSub').removeAttr('disabled');
+			    }
+			
+			}
+			
+			else if(iCnt==5)
+			{   
+				var set1 = new Set([document.getElementsByName("opt1")[0].value, document.getElementsByName("opt2")[0].value,document.getElementsByName("opt3")[0].value,document.getElementsByName("opt4")[0].value]);
+			      
+			
+				if( eqSet(set1, new Set(["st1","vac1","st1","ps1"])))
+				{
+					$('#pt').append('<label> Sub Assembly: </label><select name ="san"><option>Pressure sense</option></select>');
+			        $('#btAdd').attr('disabled', 'disabled');
+					$('#btDone').attr('disabled', 'disabled');
+					$('#onBoardSub').removeAttr('disabled');
+			    }
+			
+			
+			
+			}
+					
+        });
+		
+		
+		 // REMOVE ONE ELEMENT PER CLICK.
+        $('#btRemove').click(function() {
+            if (iCnt != 0) { $('#' + iCnt).remove(); iCnt = iCnt - 1; }
+        
+          
+        });
+    
+
+   		
+$('#onBoardSub').click(function() { 
+				
+		var SelectedValue=document.getElementById("list").value; 
+		var regexp = /^(([A-Fa-f0-9]{2}[:]){5}[A-Fa-f0-9]{2}[,]?)+$/i;
+		var values=[document.getElementsByName("machine")[0].value,document.getElementsByName("zone")[0].value,document.getElementsByName("loc")[0].value];
+		var okFlag = 1;
+		values.forEach(function(x){
+			if(x == "") okFlag = 2;
+			});
+		for(var i = 1; i < iCnt ; i++){
+			var dmac = 'mac' + i;
+			var val = document.getElementsByName(dmac)[0].value;	
+
+			if(val=="")
+				okFlag = 2;
+			
+		else 
+			if(!regexp.test(val))
+					okFlag = 3;
+				
+		}
+		if(okFlag == 2)
+			 alert("Please don't leave any field blank!");
+		else if(okFlag == 3)
+			 alert("Your Mac Id is not correct!");
+		else{
+			  $('#count1').val(iCnt-1);
+			  $('#pt').submit();
+		      // alert("Your data has been entered successfully!");
+		    }
+		  
+	});
+	
+	$('#btreplace').click(function()
+	{
+	  var regexp = /^(([A-Fa-f0-9]{2}[:]){5}[A-Fa-f0-9]{2}[,]?)+$/i;
+	  var old=document.getElementsByName("offmac")[0].value;
+	  var new1=document.getElementsByName("newmac")[0].value;
+	
+   if(old==""&&new1=="")
+    {
+         alert("Please enter mac address !");
+
+    } 
+ 
+	
+   else if(!regexp.test(new1))
+    {
+         alert("Your newMac Id is not correct !");
+    } 
+   else
+    {
+         $('#pt1').submit();
+    }
+	});	
+});
+ </script>
+</body>
+</html>

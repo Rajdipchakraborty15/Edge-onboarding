@@ -1,0 +1,28 @@
+body{
+  background: #C0C0C0;
+  background-size: cover;
+ }
+ legend{
+	 font-weight: bolder;
+ }
+.aaa{
+
+	
+  width: 600px;
+  height: 500px;
+  background-color:rgba(0,0,0,0.0);
+  margin: 0 auto;
+  margin-top: 50px;
+  padding-top: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  -webkit-border-color: 15px;
+  -moz-border-color: 15px;
+  -ms-border-color: 15px;
+  -o-border-color: 15px;
+  border-color: 15px;
+  font-size: 16px;
+ }
+
+ 
+
