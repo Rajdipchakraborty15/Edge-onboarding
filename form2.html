@@ -33,21 +33,20 @@
 
 
 <table >
- <tr> <td><label <b> MachineName </b></label></td>
-      <td><input type="text"  placeholder="enter machine name"   name ="machine" size=20 required  ></td>
-      <td><input type="button" value="onboard" id = "onBoardSub"></td>
- </tr>
+<tr> <td><label <b> MachineName </b></label></td>
+     <td><input type="text"  placeholder="enter machine name"   name ="machine" size=20 required  ></td>
+     <td><input type="button" value="onboard" id = "onBoardSub"></td>
+</tr>
 
- <tr>
+<tr>
      <td> <label <b> Zone</b></label></td>
      <td><input type="text"  placeholder="enter zone"   name ="zone" size=20 required  ></td>
- </tr>
-
+</tr>	 
 <tr>
      <td><label <b> Location </b></label></td>
      <td><input type="text"  placeholder="enter location"   name ="loc" size=20 required  ></td>
 </tr>
- <tr>
+<tr>
      <td><label <b>Datahub MAC </b></label></td>
      <td><input type="text"  placeholder="enter datahub mac"   name ="dhubmac" size=20 required  ></td>
 </tr>
@@ -65,7 +64,7 @@
       <option>vac1</option>
       <option>ps1</option>
       <option>pf1</option>
-    </select></td>
+</select></td>
 <td><input type="hidden" name="count" id="count1"/></td>
 <td><input type="button" id="btAdd" value="Add More" class="bt" /></td>
 <td><input type="button" id="btDone" value="Done" class="bt" /></td></tr>
@@ -224,6 +223,10 @@ $('#onBoardSub').click(function() {
 		var datamac=document.getElementsByName("dhubmac")[0].value;
 		var values=[document.getElementsByName("machine")[0].value,document.getElementsByName("zone")[0].value,document.getElementsByName("loc")[0].value,datamac];
 		var okFlag = 1;
+		
+		if(!regexp.test(datamac))
+			okFlag = 3;
+		  
 		values.forEach(function(x){
 			if(x == "") okFlag = 2;
 			});
@@ -234,14 +237,11 @@ $('#onBoardSub').click(function() {
 			if(val=="")
 				okFlag = 2;
 			
-		else 
-			if(!regexp.test(val))
-					okFlag = 3;
+			else 
+				if(!regexp.test(val))
+						okFlag = 3;
 				
 		}
-		
-		if(!regexp.test(datamac))
-	      okFlag = 3;
 	  
 		if(okFlag == 2)
 			 alert("Please don't leave any field blank!");
