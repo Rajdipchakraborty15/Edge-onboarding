@@ -26,7 +26,7 @@ app.post('/onBoard', function(req, res) {
 	var zone    = req.body.zone;
 	var loc     = req.body.loc;
 	var san     = req.body.san;
-	var dhubmac = req.body.dhubmac;
+	var dhubmac = req.body.dhubmac.toUpperCase();
 	var macstr  = "";
 	
 	var header = "{\"machine\":\""+machine+"\",\"zone\":\""+zone+"\",\"location\":\""+loc+"\"}";
@@ -99,11 +99,11 @@ app.post('/replace', function(req, res) {
 				//fs.readFile('/usr/src/conf/sensor.config', 'utf8', function (err, data) {
 					if (err) throw err;
 					
-					var jsondata               = JSON.parse(data);
-					var sensorsonboarded       = jsondata['sensorsonboarded'];
-					sensorsonboarded           = sensorsonboarded.replace(/[\"]/g, '"');
+					var jsondata                 = JSON.parse(data);
+					var sensorsonboarded         = jsondata['sensorsonboarded'];
+					sensorsonboarded             = sensorsonboarded.replace(/[\"]/g, '"');
 					sensorsonboarded = JSON.parse(sensorsonboarded);
-					sensorsonboarded[newmac1] = sensorsonboarded[mac];
+					sensorsonboarded[newmac1]    = sensorsonboarded[mac];
 					delete sensorsonboarded[mac];
 					jsondata["sensorsonboarded"] = JSON.stringify(sensorsonboarded).replace(/["]/g, "\""); 
 					fs.writeFile('onboarding.json',JSON.stringify(jsondata), (err) => {
