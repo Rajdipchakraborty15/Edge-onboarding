@@ -102,7 +102,7 @@ app.post('/replace', function(req, res) {
 					var jsondata                 = JSON.parse(data);
 					var sensorsonboarded         = jsondata['sensorsonboarded'];
 					sensorsonboarded             = sensorsonboarded.replace(/[\"]/g, '"');
-					sensorsonboarded = JSON.parse(sensorsonboarded);
+					sensorsonboarded             = JSON.parse(sensorsonboarded);
 					sensorsonboarded[newmac1]    = sensorsonboarded[mac];
 					delete sensorsonboarded[mac];
 					jsondata["sensorsonboarded"] = JSON.stringify(sensorsonboarded).replace(/["]/g, "\""); 
