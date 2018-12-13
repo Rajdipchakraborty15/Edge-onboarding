@@ -17,30 +17,37 @@ app.get('/', function(req, res){
 
 app.post('/onBoard', function(req, res) {
    
-	var count = req.body.count;
-	var jsondata = {};
-	jsondata.Header = {};
-	jsondata[req.body.san] = {};
-	var machine=req.body.machine;
-	var zone=req.body.zone;
-	var loc=req.body.loc;
-	var sai=req.body.sai;
-	var macstr = "";
+	var count            = req.body.count;
+	var jsondata         = {};		
+	var sensorsonboarded = {};
 	
-	jsondata.Header["machine"]  = machine;
-	jsondata.Header["zone"]     = zone;
-	jsondata.Header["location"] = loc;
-	jsondata.Header["sai"]      = sai;
 	
+	var machine = req.body.machine;
+	var zone    = req.body.zone;
+	var loc     = req.body.loc;
+	var san     = req.body.san;
+	var dhubmac = req.body.dhubMac;
+	var macstr  = "";
+	
+	var header = "{\"machine\":\""+machine+"\",\"zone\":\""+zone+"\",\"location\":\""+loc+"\"}";
+	
+
 	for (var i = 1; i <= count; i++)
 	{
-		dmac = "mac" + i;
+		dmac  = "mac" + i;
 		dtype = "opt" + i;
-		jsondata[req.body.san][req.body[dmac].toUpperCase()] = req.body[dtype];
+		sensorsonboarded[req.body[dmac].toUpperCase()] = req.body[dtype];
 		
 		macstr = macstr + req.body[dmac].toUpperCase() + ',' + req.body[dtype] + '\n';
 	}
-		
+
+	sensorsonboarded             = JSON.stringify(sensorsonboarded).replace(/["]/g, "\"");
+	jsondata["header"]           = header;
+	jsondata["devicetype"]       = san;
+	jsondata["sensorsonboarded"] = sensorsonboarded; 
+	jsondata["datahubmac"]       = dhubmac;
+	jsondata["type"]             = "Datahub";
+
 	fs.writeFile('onboarding.json',JSON.stringify(jsondata), function (err) {
   //fs.writeFile('/usr/src/conf/onboarding.json',JSON.stringify(jsondata), function (err) {
         
@@ -57,27 +64,27 @@ app.post('/onBoard', function(req, res) {
   });
 
 app.post('/replace', function(req, res) {
-    var mac=req.body.offmac.toUpperCase();
-	var newmac1=req.body.newmac.toUpperCase();
-	var found = 0;
+    var mac     = req.body.offmac.toUpperCase();
+	var newmac1 = req.body.newmac.toUpperCase();
+	var found   = 0;
 	fs.readFile('sensor.config', 'utf8', function (err, data) {
 	//fs.readFile('/usr/src/conf/sensor.config', 'utf8', function (err, data) {
 		if (err) throw err;
 		var newstr = ""
-		var arr = data.split('\n');
+		var arr    = data.split('\n');
 		for (var i in arr)
 		{
 			
 			if(mac != arr[i].slice(0, 17) && arr[i] != "")
 				
-				newstr=newstr+arr[i]+"\n";		
+				newstr = newstr+arr[i]+"\n";		
 			
 			else
 				if(arr[i] != "")
 				{
 					
-					newstr=newstr+newmac1+arr[i].slice(17)+"\n";		
-					found = 1;
+					newstr = newstr+newmac1+arr[i].slice(17)+"\n";		
+					found  = 1;
 				}
 		}
 		
@@ -87,13 +94,18 @@ app.post('/replace', function(req, res) {
 			fs.writeFile('sensor.config',newstr, (err) => {
 			//fs.writeFile('/usr/src/conf/sensor.config',newstr, (err) => {
 				if (err) throw err;
+				
 				fs.readFile('onboarding.json', 'utf8', function (err, data) {
 				//fs.readFile('/usr/src/conf/sensor.config', 'utf8', function (err, data) {
 					if (err) throw err;
-					var jsondata = JSON.parse(data);
-					var keys = Object.keys(jsondata);
-					jsondata[keys[1]][newmac1] = jsondata[keys[1]][mac];
-					delete jsondata[keys[1]][mac];
+					
+					var jsondata               = JSON.parse(data);
+					var sensorsonboarded       = jsondata['sensorsonboarded'];
+					sensorsonboarded           = sensorsonboarded.replace(/[\"]/g, '"');
+					sensorsonboarded = JSON.parse(sensorsonboarded);
+					sensorsonboarded[newmac1] = sensorsonboarded[mac];
+					delete sensorsonboarded[mac];
+					jsondata["sensorsonboarded"] = JSON.stringify(sensorsonboarded).replace(/["]/g, "\""); 
 					fs.writeFile('onboarding.json',JSON.stringify(jsondata), (err) => {
 					//fs.writeFile('/usr/src/conf/'onboarding.json',JSON.stringify(jsondata), (err) => {
 						if (err) throw err;
