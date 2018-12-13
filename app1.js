@@ -26,7 +26,7 @@ app.post('/onBoard', function(req, res) {
 	var zone    = req.body.zone;
 	var loc     = req.body.loc;
 	var san     = req.body.san;
-	var dhubmac = req.body.dhubMac;
+	var dhubmac = req.body.dhubmac;
 	var macstr  = "";
 	
 	var header = "{\"machine\":\""+machine+"\",\"zone\":\""+zone+"\",\"location\":\""+loc+"\"}";
