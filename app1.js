@@ -52,8 +52,8 @@ app.post('/onBoard', function(req, res) {
   //fs.writeFile('/usr/src/conf/onboarding.json',JSON.stringify(jsondata), function (err) {
         
 		if (err) throw err;
-	fs.writeFile('sensor.config',macstr,'utf8', function (err) {
-			//fs.writeFile('/usr/src/conf/sensor.config','utf8', function (err) {
+		fs.writeFile('sensor.config',macstr,'utf8', function (err) {
+		//fs.writeFile('/usr/src/conf/sensor.config','utf8', function (err) {
         
 			if (err) throw err;
 			console.log('\n\n Successfully saved to file: onboarding.json and sensor.config!');
