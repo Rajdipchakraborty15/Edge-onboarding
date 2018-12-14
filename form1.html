@@ -1,0 +1,90 @@
+<html>
+<head>
+    <title>MachineSense</title>
+	       
+     <link rel="stylesheet" type="text/css" href="public/style.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	
+     <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico" />                   
+
+</head>
+
+<body>
+    <div class="header_logo">
+                        
+                          
+                        
+                        
+		<a href="/" >
+			<img src="public/logo.png" alt="MachineSense" itemprop="logo" style ="height: 40px">
+		</a>
+	
+                        
+                            
+                        
+    </div>
+
+<div class="aaa"> 
+
+   <fieldset>
+   <legend>Onboarding Details</legend>
+<form action ="/dhubOnBoard" name ="form2" id='pt' method="post">
+
+
+<table >
+<tr> <td><label <b> Datahub MAC </b></label></td>
+     <td><input type="text"  placeholder="enter datahub MAC"   name ="dhubmac" size=20 required  ></td>
+</tr>
+
+<tr>
+     <td> <label <b> Connection String </b></label></td>
+     <td><input type="text"  placeholder="enter connectionstring"   name ="connstr" size=20 required  ></td>
+</tr>	 
+<tr>
+     <td><label <b> Dashboard Link </b></label></td>
+     <td><input type="text"  placeholder="enter dashboard link"   name ="dboardlink" size=20 required  ></td>
+</tr>
+<td><input type="button" id="onBoardSub" value="Onboard" class="bt" /></td></tr>
+
+</table>
+</form>
+</fieldset><br><br>
+
+</div><!-- close aaa -->
+
+
+<script language ="javascript">
+
+$(document).ready(function() {
+
+   		
+$('#onBoardSub').click(function() { 
+				
+		var regexp = /^(([A-Fa-f0-9]{2}[:]){5}[A-Fa-f0-9]{2}[,]?)+$/i;
+		var datamac=document.getElementsByName("dhubmac")[0].value;
+		var values=[document.getElementsByName("connstr")[0].value,document.getElementsByName("dboardlink")[0].value,datamac];
+		var okFlag = 1;
+		
+		if(!regexp.test(datamac))
+			okFlag = 3;
+		  
+		values.forEach(function(x){
+			if(x == "") okFlag = 2;
+			});
+	  
+		if(okFlag == 2)
+			 alert("Please don't leave any field blank!");
+		else if(okFlag == 3)
+			 alert("Your Mac Id is not correct!");
+		else{
+			  $('#pt').submit();
+		      // alert("Your data has been entered successfully!");
+		    }
+	});
+	
+	
+});
+ </script>
+</body>
+</html>
