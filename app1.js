@@ -106,8 +106,14 @@ app.post('/onBoard', function(req, res) {
 				//fs.writeFile('/usr/src/conf/sensor.config','utf8', function (err) {
 		        
 					if (err) throw err;
-					console.log('\n\n Successfully uploaded file: onboarding.json and aved file: sensor.config!');
-					res.send("Successfully uploaded file: onboarding.json and saved file: sensor.config!");
+					console.log('Successfully uploaded file: onboarding.json and saved file: sensor.config!');
+					fs.writeFile('onboarding.json',JSON.stringify(jsondata), (err) => {
+					//fs.writeFile('/usr/src/conf/'onboarding.json',JSON.stringify(jsondata), (err) => {
+						if (err) throw err;
+						console.log('Successfully written file: onboarding.json to datahub!');
+						res.send("Successfully uploaded file: onboarding.json and saved file: sensor.config!");
+					});	
+					
 				});
 			}
     		else
@@ -157,32 +163,53 @@ app.post('/replace', function(req, res) {
 		
 		if(found == 1)
 		{
-			fs.writeFile('sensor.config',newstr, (err) => {
-			//fs.writeFile('/usr/src/conf/sensor.config',newstr, (err) => {
+			
+			fs.readFile('onboarding.json', 'utf8', function (err, data) {
+			//fs.readFile('/usr/src/conf/sensor.config', 'utf8', function (err, data) {
 				if (err) throw err;
 				
-				fs.readFile('onboarding.json', 'utf8', function (err, data) {
-				//fs.readFile('/usr/src/conf/sensor.config', 'utf8', function (err, data) {
-					if (err) throw err;
+				var jsondata                 = JSON.parse(data);
+				var sensorsonboarded         = jsondata['sensorsonboarded'];
+				sensorsonboarded             = sensorsonboarded.replace(/[\"]/g, '"');
+				sensorsonboarded             = JSON.parse(sensorsonboarded);
+				sensorsonboarded[newmac1]    = sensorsonboarded[mac];
+				delete sensorsonboarded[mac];
+				jsondata["sensorsonboarded"] = JSON.stringify(sensorsonboarded).replace(/["]/g, "\"");
+
+				var options = {
+					uri: 'https://ratmanepcdemo.azurewebsites.net/api/ratmanOnboarding?code=bbKDCcV89u6DfPAats7C1Otfv8FwuKlLgoigYSfr/GmaGLTD3VlTUQ==',
+					method: 'POST',
+					json: jsondata
+				};
 					
-					var jsondata                 = JSON.parse(data);
-					var sensorsonboarded         = jsondata['sensorsonboarded'];
-					sensorsonboarded             = sensorsonboarded.replace(/[\"]/g, '"');
-					sensorsonboarded             = JSON.parse(sensorsonboarded);
-					sensorsonboarded[newmac1]    = sensorsonboarded[mac];
-					delete sensorsonboarded[mac];
-					jsondata["sensorsonboarded"] = JSON.stringify(sensorsonboarded).replace(/["]/g, "\""); 
-					fs.writeFile('onboarding.json',JSON.stringify(jsondata), (err) => {
-					//fs.writeFile('/usr/src/conf/'onboarding.json',JSON.stringify(jsondata), (err) => {
-						if (err) throw err;
-						
-						console.log(mac + " has been replaced by" + newmac1 + "!");
-					
-						res.send(mac + " has been replaced by" + newmac1 + "!");
-						
-					});
+				request(options, 
+					(error, resp, body) => {
+					if (error) 
+					    throw error;
+					    
+					if(resp.statusCode == 200 && body != "")
+						if(body.includes("updated"))
+						{
+							fs.writeFile('sensor.config',newstr, (err) => {
+							//fs.writeFile('/usr/src/conf/sensor.config',newstr, (err) => {
+								if (err) throw err;
+							
+						    	console.log(mac + " has been replaced by" + newmac1 + " in azure and sensor.config!");
+								fs.writeFile('onboarding.json',JSON.stringify(jsondata), (err) => {
+								//fs.writeFile('/usr/src/conf/'onboarding.json',JSON.stringify(jsondata), (err) => {
+									if (err) throw err;
+									console.log(mac + " has been replaced by" + newmac1 + " in datahub!");
+									res.send(mac + " has been replaced by" + newmac1 + "!");
+								});					
+							});
+						}
+			    		else
+			    			res.send("Device : " + dhubmac + " has not been onboarded, please ask admin to onboard device.");
+			    	else
+			    		res.send("Failed to send data.");														
 				});
 			});
+		
 		}
 		else
 			res.send(mac + " is not found.");
