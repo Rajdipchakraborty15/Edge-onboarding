@@ -43,9 +43,10 @@ app.post('/dhubOnBoard', function(req, res) {
 			if(body.includes("anymore") || body.includes("done"))
 			{
 			    res.sendFile(__dirname+'/form2.html');
+			    //res.sendFile('/usr/src/resource/sensor_onboard/form2.html');
 			    console.log(body);
 			}
-    			//res.sendFile('/usr/src/resource/sensor_onboard/form2.html');
+    			
     		else
     			res.send("Failed to write to database.");
     	else
