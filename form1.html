@@ -2,30 +2,115 @@
 <head>
     <title>MachineSense</title>
 	       
-     <link rel="stylesheet" type="text/css" href="public/style.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	 <link rel="stylesheet" type="text/css" href="public/style.css">
+	 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	 
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	 
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
 	
-     <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico" />                   
+	 <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico" />      
+	 
+	 <style>
+			.cardTitlePadding {
+			   padding: 10px;
+			   font-weight: 400!important;
+	   
+			}
+			.custompadding-top {
+	   
+				padding-top: 2%;
+	   
+			}
+	   
+			.customBackgroundColor {
+	   
+			   background-color: #225C9B!important
+			}
+	</style>
 
 </head>
 
 <body>
-    <div class="header_logo">
-                        
-                          
-                        
-                        
+   <!-- <div class="header_logo">
+             
 		<a href="/" >
 			<img src="public/logo.png" alt="MachineSense" itemprop="logo" style ="height: 40px">
 		</a>
+	           
+                        
+	</div> -->
 	
-                        
-                            
-                        
-    </div>
+	<nav>
+			<div class="nav-wrapper customBackgroundColor">
+			  <a href="#" class="brand-logo" style="padding: 1%;">
+					<img src="public/logo.png" alt="MachineSense" itemprop="logo" style ="height: 40px">
+			  </a>
+			
+			</div>
+	</nav>
 
-<div class="aaa"> 
+
+	<div class="row custompadding-top">
+
+			<div class="col s12 m1">
+			</div>
+	
+			<div class="col s12 m10">
+			  <div class="card darken-1">
+				<div class="card-title customBackgroundColor white-text cardTitlePadding" >Datahub Onboarding</div>
+				<div class="card-content">
+	
+	
+						<form class="container">
+								<div class="row">
+		  
+										<div class="input-field col s12">
+												<input type="text" placeholder="Enter Datahub MAC" name ="dhubmac" size=20 required >
+												<label for="DatahubMAC">Datahub MAC</label>
+										</div>
+
+										<div class="input-field col s12">
+												<input type="text" placeholder="Enter Connection String" name ="connstr" size=20 required >
+												<label for="ConnectionString">Connection String</label>
+										</div>
+
+										<div class="input-field col s12">
+												<input type="text" placeholder="Enter Dashboard Link" name ="dboardlink" size=20 required >
+												<label for="DashboardLink">Dashboard Link</label>
+										</div>
+	
+	
+										<div class="input-field col s12">
+											
+												<button class="btn waves-effect waves-light customBackgroundColor" id="onBoardSub" value="Onboard">
+														Onboard
+												</button>
+	
+										</div>
+									   
+								</div>
+						</form>
+						
+						
+				</div>
+				
+	
+			  </div>
+			</div>
+	
+			<div class="col s12 m1">
+			</div>
+		
+		  </div>
+
+	
+
+<!-- <div class="aaa"> 
 
    <fieldset>
    <legend>Datahub Onboarding Details</legend>
@@ -51,7 +136,7 @@
 </form>
 </fieldset><br><br>
 
-</div><!-- close aaa -->
+</div> -->
 
 
 <script language ="javascript">
@@ -59,7 +144,9 @@
 $(document).ready(function() {
 
    		
-$('#onBoardSub').click(function() { 
+$('#onBoardSub').click(function(e) { 
+
+	    e.preventDefault()
 				
 		var regexp = /^(([A-Fa-f0-9]{2}[:]){5}[A-Fa-f0-9]{2}[,]?)+$/i;
 		var datamac=document.getElementsByName("dhubmac")[0].value;
@@ -74,12 +161,30 @@ $('#onBoardSub').click(function() {
 			});
 	  
 		if(okFlag == 2)
+
 			 alert("Please don't leave any field blank!");
+
 		else if(okFlag == 3)
+
 			 alert("Your Mac Id is not correct!");
+
 		else{
-			  $('#pt').submit();
-		      // alert("Your data has been entered successfully!");
+			  //$('#pt').submit();
+
+			  // alert("Your data has been entered successfully!");
+			  
+			  $.ajax({
+					
+					url: "/dhubOnBoard",
+					method: 'POST',
+					type: 'POST'
+					
+				}).done(function (res) {
+
+					swal(res)
+
+				})
+
 		    }
 	});
 	
