@@ -2,15 +2,7 @@
   "name": "edge-onboarding",
   "version": "1.0.0",
   "description": "Frontend takes Machine name, zone, location, datahub MAC, MAC address and type of sensor upto 4.  Allows onboarding, replacement of sensor id and offboarding.",
-  "main": "app1.js",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "fs": "0.0.1-security",
-    "os": "^0.1.1",
-    "request": "^2.88.0"
-  },
-  "devDependencies": {},
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/Rajdipchakraborty15/Edge-onboarding/issues"
   },
-  "homepage": "https://github.com/Rajdipchakraborty15/Edge-onboarding#readme"
+  "homepage": "https://github.com/Rajdipchakraborty15/Edge-onboarding#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "os": "^0.1.1",
+    "request": "^2.88.0"
+  }
 }

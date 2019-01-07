@@ -55,6 +55,6 @@ app.post('/dhubOnBoard', function(req, res) {
 });
 
 
-
-app.listen(3001)
-console.log("Listening at 3001...")
+var port = process.env.PORT || 1337;
+app.listen(port)
+console.log("Listening at 1337...")
