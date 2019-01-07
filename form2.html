@@ -86,7 +86,7 @@
 									
 									</div> -->
 									
-									<div class="input-field col s12">
+									<!-- <div class="input-field col s12">
 											<input type="text" placeholder="Enter Zone"   name="zone" size=20 required >
 											<label for="Zone">Zone</label>
 									</div>
@@ -94,7 +94,27 @@
 									<div class="input-field col s12">
 											<input type="text" placeholder="Enter Location"   name="loc" size=20 required >
 											<label for="Location">Location</label>
-									</div>
+									</div> -->
+
+									<div class="input-field col s12">
+						
+											<select id="zone" name="zone">
+											 
+											</select>
+											<label for="Zone">Zone</label>
+
+										
+										
+									</div> 
+
+									<div class="input-field col s12">
+						
+											<select id="location" name="loc">
+											 
+											</select>
+											<label for="Type">Location</label>
+										
+									</div> 
 
 									<div class="input-field col s12">
 											<input type="text" placeholder="Enter Datahub MAC"   name="dhubmac" size=20 required >
@@ -352,6 +372,50 @@
 $(document).ready(function() {
 
 	   $('select').formSelect();
+
+	    $.ajax({
+					
+					url: "http://137.117.93.67:5000/api/zone",
+					method: 'GET',
+					type: 'GET'
+					
+				}).done(function (res) {
+
+				
+					for(var x in res){
+						
+						$('#zone').append('<option>'+ res[x].name +'</option>');
+
+					}
+
+					$('select').formSelect();
+
+				
+
+		})
+
+		$.ajax({
+					
+					url: "http://137.117.93.67:5000/api/location",
+					method: 'GET',
+					type: 'GET'
+					
+				}).done(function (res) {
+
+				
+					for(var y in res){
+						
+						$('#location').append('<option>'+ res[y].name +'</option>');
+
+					}
+
+					$('select').formSelect();
+
+				
+
+		})
+
+
 		$('#onBoardSub').attr('disabled', 'disabled');
         var iCnt = 2;
         // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
@@ -513,12 +577,15 @@ $('#onBoardSub').click(function() {
 			  $('#count1').val(iCnt-1);
 			 // $('#pt').submit();
 			  // alert("Your data has been entered successfully!");
+
+			  var data = $('#pt').serializeArray()
 			  
 			  $.ajax({
 					
 					url: "/onBoard",
 					method: 'POST',
-					type: 'POST'
+					type: 'POST',
+					data: data
 					
 				}).done(function (res) {
 
@@ -572,11 +639,15 @@ $('#onBoardSub').click(function() {
    else
     {
 		// $('#pt1').submit();
+
+		var data = $('#pt1').serializeArray()
+
 		$.ajax({
 			
 			url: "/replace",
 			method: 'POST',
-			type: 'POST'
+			type: 'POST',
+			data: data
 			
 		}).done(function (res) {
 
