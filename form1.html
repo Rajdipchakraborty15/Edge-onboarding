@@ -66,7 +66,7 @@
 				<div class="card-content">
 	
 	
-						<form class="container">
+						<form class="container" id="onBoardForm2">
 								<div class="row">
 		  
 										<div class="input-field col s12">
@@ -152,6 +152,10 @@ $('#onBoardSub').click(function(e) {
 		var datamac=document.getElementsByName("dhubmac")[0].value;
 		var values=[document.getElementsByName("connstr")[0].value,document.getElementsByName("dboardlink")[0].value,datamac];
 		var okFlag = 1;
+
+		console.log("datamac", datamac)
+
+		console.log("values", values)
 		
 		if(!regexp.test(datamac))
 			okFlag = 3;
@@ -172,12 +176,16 @@ $('#onBoardSub').click(function(e) {
 			  //$('#pt').submit();
 
 			  // alert("Your data has been entered successfully!");
+
+			  var data = $('#onBoardForm2').serializeArray()
 			  
 			  $.ajax({
 					
 					url: "/dhubOnBoard",
 					method: 'POST',
-					type: 'POST'
+					type: 'POST',
+					data: data
+
 					
 				}).done(function (res) {
 
