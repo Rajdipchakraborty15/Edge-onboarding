@@ -2,30 +2,267 @@
 <head>
     <title>MachineSense</title>
 	       
-     <link rel="stylesheet" type="text/css" href="public/style.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="public/style.css"> 
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
 	
-     <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico" />                   
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	 
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+	 
+	
+	 <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico" />     
+	 
+	 <style>
+	 .cardTitlePadding {
+		padding: 10px;
+		font-weight: 400!important;
+
+	 }
+	 .custompadding-top {
+
+		 padding-top: 2%;
+
+	 }
+
+	 .customBackgroundColor {
+
+		background-color: #225C9B!important
+	 }
+	 </style>
 
 </head>
 
 <body>
-    <div class="header_logo">
-                        
-                          
-                        
-                        
+    <!-- <div class="header_logo custompadding-top">
+                               
 		<a href="/" >
 			<img src="public/logo.png" alt="MachineSense" itemprop="logo" style ="height: 40px">
 		</a>
-	
-                        
-                            
-                        
-    </div>
+	                 
+	</div> -->
 
-<div class="aaa"> 
+	<nav>
+			<div class="nav-wrapper customBackgroundColor">
+			  <a href="#" class="brand-logo" style="padding: 1%;">
+					<img src="public/logo.png" alt="MachineSense" itemprop="logo" style ="height: 40px">
+			  </a>
+			
+			</div>
+	</nav>
+
+	
+	
+	<div class="row custompadding-top">
+
+		<div class="col s12 m1">
+		</div>
+		
+		<div class="col s12 m10">
+		  <div class="card darken-1">
+			<div class="card-title customBackgroundColor white-text cardTitlePadding" >Onboarding</div>
+			<div class="card-content">
+
+
+					<form class="container" action ="/onBoard" name ="form2" id='pt' method="post">
+							<div class="row">
+	  
+									<div class="input-field col s12">
+											<input placeholder="Enter Machine Name" type="text" name ="machine" size=20 required>
+											<label for="MachineName">MachineName</label>
+									</div>
+
+									<!--<div class="input-field col s3">
+											<button class="btn waves-effect waves-light customBackgroundColor" type="button" id="onBoardSub">
+													onboard
+											</button>
+									
+									</div> -->
+									
+									<div class="input-field col s12">
+											<input type="text" placeholder="Enter Zone"   name="zone" size=20 required >
+											<label for="Zone">Zone</label>
+									</div>
+
+									<div class="input-field col s12">
+											<input type="text" placeholder="Enter Location"   name="loc" size=20 required >
+											<label for="Location">Location</label>
+									</div>
+
+									<div class="input-field col s12">
+											<input type="text" placeholder="Enter Datahub MAC"   name="dhubmac" size=20 required >
+											<label for="DatahubMAC">Datahub MAC</label>
+									</div>
+
+									<div class="input-field col s12">
+											<input type="text" placeholder="12 digits for mac" maxlength="17"  name ="mac1" size=20 required >
+											<label for="MAC">MAC</label>
+									</div>
+
+								
+									 <div class="input-field col s8">
+						
+													<select id="list" name="opt1">
+													  <option disabled selected>Type Option</option>
+													  <option>st1</option>
+													  <option>vac1</option>
+													  <option>ps1</option>
+													  <option>pf1</option>
+													</select>
+													<label for="Type">Type</label>
+												
+									</div> 
+
+									<div class="input-field col s4">
+											<input type="hidden" name="count" id="count1"/>
+											<button class="btn waves-effect waves-light customBackgroundColor" type="button" id="btAdd" value="Add More">
+													Add More
+											</button>
+
+									</div>
+
+									<div class="input-field col s12" align="center">
+
+											<button class="btn waves-effect waves-light customBackgroundColor" type="button" id="btDone" value="Done">
+													Done
+											</button>
+
+									</div>
+
+
+
+							       
+							</div>
+					</form>
+					
+					<form class="container" action ="/offboard" name ="" method="post">
+						<div class="row">
+
+								<div class="input-field col s12" align="center">
+
+										<button class="btn waves-effect waves-light customBackgroundColor" type="button" id="onBoardSub">
+												onboard
+										</button>
+								
+									
+										<button class="btn waves-effect waves-light customBackgroundColor" type="button" id="offBoardSub" value="offboard">
+												OffBoard
+										</button>
+
+								</div>
+							   
+						</div>
+				    </form>
+					
+			</div>
+			
+
+		  </div>
+		</div>
+
+		<div class="col s12 m1">
+		</div>
+	
+
+	  </div>
+
+
+	  <div class="row custompadding-top">
+
+			<div class="col s12 m1">
+			</div>
+	
+			<div class="col s12 m10">
+			  <div class="card darken-1">
+				<div class="card-title customBackgroundColor white-text cardTitlePadding" >Replace Sensor</div>
+				<div class="card-content">
+	
+	
+						<form class="container" action ="/replace" name="form3" method ="post" id="pt1">
+								<div class="row">
+		  
+										<div class="input-field col s12">
+												<input type="text" placeholder="12 digits for old mac" maxlength="17" name="offmac" size=20  required >
+												<label for="OLDMAC">OLD MAC</label>
+										</div>
+
+										<div class="input-field col s12">
+												<input type="text" placeholder="12 digits for new mac" maxlength="17" name="newmac" size=20  required >
+												<label for="NEWMAC">NEW MAC</label>
+										</div>
+	
+	
+										<div class="input-field col s12">
+											
+												<button class="btn waves-effect waves-light customBackgroundColor" type="button" id="btreplace" value="Replace">
+														Replace
+												</button>
+	
+										</div>
+									   
+								</div>
+						</form>
+						
+						
+				</div>
+				
+	
+			  </div>
+			</div>
+	
+			<div class="col s12 m1">
+			</div>
+		
+		  </div>
+
+
+		 <!-- <div class="row custompadding-top">
+
+				<div class="col s12 m2">
+				</div>
+		
+				<div class="col s12 m8">
+				  <div class="card darken-1">
+					<div class="card-title customBackgroundColor white-text cardTitlePadding" >OffBoarding</div>
+					<div class="card-content">
+		
+		
+							<form class="container" action ="/offboard" name ="" method="post">
+									<div class="row">
+			  
+											<div class="input-field col s12" align="center">
+												
+													<button class="btn waves-effect waves-light" type="submit" value="offboard">
+															OffBoard
+													</button>
+		
+											</div>
+										   
+									</div>
+							</form>
+							
+							
+					</div>
+					
+		
+				  </div>
+				</div>
+		
+				<div class="col s12 m2">
+				</div>
+			
+			  </div> -->
+
+
+
+ <!-- <div class="aaa"> 
 
    <fieldset>
    <legend>Onboarding Details</legend>
@@ -104,33 +341,41 @@
 </tr>	 
 </table>
 </fieldset>
-</form><!-- close form -->
-</div><!-- close aa -->
+</form> 
+</div> -->
+
+
 
 
 <script language ="javascript">
 
 $(document).ready(function() {
+
+	   $('select').formSelect();
 		$('#onBoardSub').attr('disabled', 'disabled');
         var iCnt = 2;
         // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
 
 $('#btAdd').click(function() {
+
+	    
 		
         if (iCnt <= 4) {
 
-
+              
                 // ADD TEXTBOX.
                 $('#pt').append('&nbsp<label>MAC: </label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type=text class="input" placeholder="12 digits for mac" maxlength="17" size=20 required name="mac' + iCnt + '"/>');
 			    $('#pt').append('<label> Type: </label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<select name="opt'+ iCnt + '"><option>st1</option><option>vac1</option><option>ps1</option><option>pf1</option></select><br>');
 				iCnt = iCnt + 1;
+
+				$('select').formSelect();
                 
             }
             // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON.
             // (4 IS THE LIMIT WE HAVE SET)
         else {      
                 $('#pt').append('<label>Reached the limit</label>'); 
-                $('#btAdd').attr('class', 'bt-disable'); 
+              	//  $('#btAdd').attr('class', 'bt-disable'); 
                 $('#btAdd').attr('disabled', 'disabled');
             }
         });
@@ -148,6 +393,9 @@ $('#btAdd').click(function() {
 		
 		
 		$('#btDone').click(function() {
+
+
+			//alert("hiiii")
             
 			
           
@@ -155,10 +403,18 @@ $('#btAdd').click(function() {
 			{
 				if(document.getElementsByName("opt1")[0].value=="st1")
 				{
+
+                   // console.log("hiiiiiiiiiiii")
+
 					$('#pt').append('<label> Sub Assembly: </label><select name ="san"><option>Component analyzer-</option></select>');
+
+				
+
 			        $('#btAdd').attr('disabled', 'disabled');
 					$('#btDone').attr('disabled', 'disabled');
 					$('#onBoardSub').removeAttr('disabled');
+
+				    $('select').formSelect();
 			     }
 			
 			}
@@ -174,6 +430,8 @@ $('#btAdd').click(function() {
 			        $('#btAdd').attr('disabled', 'disabled');
 					$('#btDone').attr('disabled', 'disabled');
 					$('#onBoardSub').removeAttr('disabled');
+
+					$('select').formSelect();
 				}	
 			
 			    else if(eqSet(set1, new Set(["pf1","pf1"])))
@@ -183,6 +441,8 @@ $('#btAdd').click(function() {
 			        $('#btAdd').attr('disabled', 'disabled');
 					$('#btDone').attr('disabled', 'disabled');
 					$('#onBoardSub').removeAttr('disabled');
+
+					$('select').formSelect();
 			    }
 			
 			}
@@ -198,6 +458,8 @@ $('#btAdd').click(function() {
 			        $('#btAdd').attr('disabled', 'disabled');
 					$('#btDone').attr('disabled', 'disabled');
 					$('#onBoardSub').removeAttr('disabled');
+
+					$('select').formSelect();
 			    }
 			
 			
@@ -249,10 +511,46 @@ $('#onBoardSub').click(function() {
 			 alert("Your Mac Id is not correct!");
 		else{
 			  $('#count1').val(iCnt-1);
-			  $('#pt').submit();
-		      // alert("Your data has been entered successfully!");
-		    }
+			 // $('#pt').submit();
+			  // alert("Your data has been entered successfully!");
+			  
+			  $.ajax({
+					
+					url: "/onBoard",
+					method: 'POST',
+					type: 'POST'
+					
+				}).done(function (res) {
+
+					
+					swal(res)
+
+				})
+			
+			}
 	});
+
+	$('#offBoardSub').click(function() { 
+
+		 $.ajax({
+    
+			url: "/offboard",
+			method: 'POST',
+			type: 'POST'
+			
+		}).done(function (res) {
+
+			//swal(res)
+
+			swal(res)
+
+			//console.log(res)
+
+		})
+
+	})
+	
+
 	
 	$('#btreplace').click(function()
 	{
@@ -273,7 +571,20 @@ $('#onBoardSub').click(function() {
     } 
    else
     {
-         $('#pt1').submit();
+		// $('#pt1').submit();
+		$.ajax({
+			
+			url: "/replace",
+			method: 'POST',
+			type: 'POST'
+			
+		}).done(function (res) {
+
+			
+			swal(res)
+
+		})
+
     }
 	});	
 });
