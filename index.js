@@ -193,8 +193,8 @@ app.post('/replace', function(req, res) {
       });
 	res.send("File saved!");  
   });*/
-  
-//app.use(express.static('public'))
+ 
+ //app.use(express.static('public'))
 app.post('/offboard', function(req, res) {
     
 	fs.writeFile('sensor.config',"", (err) => {
@@ -212,6 +212,6 @@ app.post('/offboard', function(req, res) {
   });  
 });  
 
-
-app.listen(3001)
-console.log("Listening at 3001...")
+var port = process.env.PORT || 1337;
+app.listen(port)
+console.log("Listening at 1337...")

@@ -2,7 +2,7 @@
   "name": "edge-onboarding",
   "version": "1.0.0",
   "description": "Frontend takes Machine name, zone, location, datahub MAC, MAC address and type of sensor upto 4.  Allows onboarding, replacement of sensor id and offboarding.",
-  "main": "app1.js",
+  "main": "index.js",
   "dependencies": {
     "aws4": "^1.8.0",
     "body-parser": "^1.18.3",
